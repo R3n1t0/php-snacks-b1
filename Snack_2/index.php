@@ -2,7 +2,29 @@
 
 <?php
 
+$checked = true;
 
+$error = "";
+
+if(empty($_GET["name"]) || empty($_GET['mail']) || empty($_GET['age'])){
+  $checked = false;
+  $error = "Dati non completi";
+}elseif($_GET["name"] < 3){
+  $checked = false;
+  $error = "Nome non completo";
+}elseif(!strpos($_GET['mail'], '@') || !strpos($_GET['mail'], '.')){
+  $checked = false;
+  $error = "Mail non corretta";
+}elseif(!is_numeric($_GET['age'])){
+  $checked = false;
+  $error = "Inserire un numero";
+}
+
+if($checked){
+  $output = "Accesso riuscito";
+}else{
+  $output = "Accesso negato";
+}
 
 ?>
 
@@ -15,6 +37,10 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <h4>Controllo mail</h4>
+  <h2><?php echo $output ?></h2>
+  <?php if(!$checked): ?>
+    <i><?php echo $error ?></i>
+  <?php endif; ?>
 </body>
 </html>
